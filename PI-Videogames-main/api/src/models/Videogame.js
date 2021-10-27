@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('videogames', {
+  sequelize.define('videogame', {
     id: { // tengo que configurar el id para que no choque con el de la api 
       type: DataTypes.UUID, 
       defaultValue: DataTypes.UUIDV4,

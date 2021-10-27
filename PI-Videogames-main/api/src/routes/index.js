@@ -17,9 +17,9 @@ const {getAllGames, getGenre} = require("./getVideogamesModel")
 // Ejemplo: router.use('/auth', authRouter);
 router.get('/videogames', async (req, res) => {
     const {name} =req.query; //no deberia traer por
-    let allGames = getAllGames(); 
+    let allGames = await getAllGames(); 
     if (name) { 
-        let searchedGame = await allGames.filter((game) => // tengo que poner await aca? 
+        let searchedGame =  allGames.filter((game) => // tengo que poner await aca? 
         game.name.toLowerCase().includes(name.toLowerCase())); 
         if (searchedGame.length >= 1) return res.status(200).send(searchedGame) // hay otra forma de escribirlo
             res.status(404).send("Game does not exist")

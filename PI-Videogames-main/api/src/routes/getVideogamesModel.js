@@ -8,11 +8,11 @@ const {Genre, Videogame} = require('../db')
 const getApiInfo = async () => {
 
           
-        const apiUrl1 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}$page=1`);
-        const apiUrl2 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}$page=2`);
-        const apiUrl3 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}$page=3`);
-        const apiUrl4 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}$page=4`);
-        const apiUrl5 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}$page=5`);
+        const apiUrl1 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1`);
+        const apiUrl2 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=2`);
+        const apiUrl3 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=3`);
+        const apiUrl4 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=4`);
+        const apiUrl5 = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=5`);
     
    const  multiApi = [apiUrl1, apiUrl2, apiUrl3, apiUrl4, apiUrl5 ]
    const apiGames = []; 
@@ -25,7 +25,7 @@ const getApiInfo = async () => {
                     return {
                         name,
                         background_image,
-                        genres: genres.map(g = g.name)
+                        genres: genres.map(g => g.name)
                     }
                 })
 
