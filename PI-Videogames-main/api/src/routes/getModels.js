@@ -52,24 +52,25 @@ const getAllGames = async () => {
     return allGames; 
 };
 
-const getGenre = async () => { 
-      const genreApi = await axios.get(` https://api.rawg.io/api/genres?key=${API_KEY}`);
-        const genre = genreApi.data.results;
-        genre.forEach(async (g) => {
-            await Genre.findOrCreate({
-                where: {
-                    name: g.name 
-                }
-            })
-        });
-        const TotalGenres = await Genre.findAll(); 
-        res.send(TotalGenres);
+// const getGenre = async () => { 
+//       const genreApi = await axios.get(` https://api.rawg.io/api/genres?key=${API_KEY}`);
+//         const genre = genreApi.data.results;
+//         genre.forEach(async (g) => {
+//             await Genre.findOrCreate({
+//                 where: {
+//                     name: g.name 
+//                 }
+//             })
+//         });
+//         const TotalGenres = await Genre.findAll(); 
+        
+//          return TotalGenres;
 
   
-}
+// }
 
 module.exports ={ 
     getAllGames,
-    getGenre,
+    // getGenre,
     
 }
