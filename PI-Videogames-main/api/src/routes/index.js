@@ -83,12 +83,21 @@ router.get('/genres', async (req, res) => {
 
 })
 
-// router.post('/videogame', async (req, res) => {
-//     const { name, description, releaseDate, rating, genres, platforms, created} = req.body; 
+router.post('/videogame', async (req, res) => {
+    const { name, description, releasedate, rating, genres, platforms, created} = req.body; 
 
-
-//     res.status(200).send("Your game has been saved")
-// })
+    let gameCreated = await Videogame.create({
+      name,
+      description,
+      releasedate,
+      rating,
+      genres,
+      created,
+      platforms, 
+      
+    });
+    res.status(200).send("Your game has been saved")
+})
 
 
 module.exports = router;
