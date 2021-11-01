@@ -4,12 +4,28 @@ import {useDispatch, useSelector} from 'react-redux'
 import { getVideoGames } from '../actions';
 import { Link } from 'react-router-dom'
 import GameCard from './GameCard'
+import Paginado from './Paginado';
 
 export default function Home (){ 
-
+//ESTADOS. MAP STATE TO PROPS ETC----------------
 const dispatch = useDispatch();
-const allVideoGames = useSelector((state) => state.videoGames);
+const allVideoGames = useSelector((state) => state.videoGames); // me trae del reducer el estado
 const videogameState = useSelector((state) => state.allVideoGames); //esto es como el map state tu props 
+//----------------------------------
+
+
+//PAGINADO ------------
+const [currentPage, setCurrentPage] = useState(1)
+const [videoGamesPerPage, setvideoGamesPerPage] = useState(15) // aca defino los personajes por pagina 
+const indexOfLastVideoGame = currentPage * videoGamesPerPage // en el estado incial el indexoflast... es 15, xq es el ultimo de la pagina actual (la 1 en el estado inicial)
+const indexOfFirstVideoGame = indexOfLastVideoGame - videoGamesPerPage // deberia ser 0, el inicio 
+const currentVideoGames = allVideoGames.slice(indexOfFirstVideoGame, indexOfLastVideoGame)
+
+
+const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber)
+}
+//------------------------------
 
 useEffect (() => {
     dispatch(getVideoGames()) // lo mismo que el map dispatch to props REPASAR
@@ -42,9 +58,14 @@ return (
                 <option value = 'created'>Local Games </option>    
                 <option value = 'API'>External Games </option>    
             </select> 
+            <Paginado  
+                videoGamesPerPage = {videoGamesPerPage}
+                allVideoGames= {allVideoGames.length}
+                paginado = {paginado}
+            />
             
             <ul>
-              {allVideoGames?.map((g) => {
+              {currentVideoGames?.map((g) => {
                 return (
                     // <Fragment>
                     //     <Link to={"/home/" + g.id}>
