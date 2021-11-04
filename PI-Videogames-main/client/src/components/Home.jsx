@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react'; 
+import React from 'react'; 
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import { getVideoGames } from '../actions';
+import { getVideoGames, getGenres, filterCreatedDB, filterByGenre, orderByName, orderByRating } from '../actions';
 import { Link } from 'react-router-dom'
 import GameCard from './GameCard'
 import Paginado from './Paginado';
+import SearchBar from './SearchBar';
 
 export default function Home (){ 
 //ESTADOS. MAP STATE TO PROPS ETC----------------
 const dispatch = useDispatch();
 const allVideoGames = useSelector((state) => state.videoGames); // me trae del reducer el estado
-const videogameState = useSelector((state) => state.allVideoGames); //esto es como el map state tu props 
+const videogameState = useSelector((state) => state.allVideoGames);
+const allGenre = useSelector((state) => state.genres);
 //----------------------------------
 
 
@@ -29,7 +31,13 @@ const paginado = (pageNumber) => {
 
 useEffect (() => {
     dispatch(getVideoGames()) // lo mismo que el map dispatch to props REPASAR
+    dispatch(getGenres())
 }, [dispatch]) //se coloca el arreglo para que no sea una loop inifnito
+
+// useEffect(() => {
+//     dispatch(getGenres())
+// }, [dispatch])
+
 
 function handleClick(e){
     e.preventDefault(); //para que no se me recarge la pagina y se pierdan los estados de redux 
@@ -37,33 +45,79 @@ function handleClick(e){
 
 }
 
+function handleFilterCreated(e) {
+    e.preventDefault();
+    dispatch (filterCreatedDB(e.target.value))
+
+}
+
+function handleFilterGenre(e) {
+    e.preventDefault();
+    dispatch(filterByGenre(e.target.value));
+}
+
+
+function handleSort(e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+  
+  }
+
+function handleScore(e) {
+    e.preventDefault();
+    dispatch(orderByRating(e.target.value));
+    
+  }
+
+// -----------------------------------------
 return (
     <div>
         <Link to = '/videogames'> Create Videogame</Link>
-        <h1> AGUANTE ...</h1>
+        <h1> The Video Game App</h1>
         <button onClick = {e => {handleClick(e)}}>
-            volver a cargar videogames 
+            Reload 
         </button>
         <div>
-            <select>
+        <SearchBar/>
+
+
+{/* filtros y ordenamientos */}
+            <div>
+            <select  onChange={e => handleSort(e)}>
                 <option value = 'asc'>A-Z</option>
                 <option value = 'desc'>Z-A </option>    
             </select> 
-            {/* <select>
-                <option value = 'asc'>ASC</option>
-                <option value = 'desc'> DES </option>    
-            </select>  */}
-            <select>
-                <option value = 'All'>All Games</option>
+
+            <select  onChange={e => handleScore(e)}>
+                <option value = 'top'>Highest</option>
+                <option value = 'low'> Lowest </option>    
+            </select> 
+
+            <select onChange={e => handleFilterGenre(e)}>
+                <option value = 'all'>Genres</option>
+                {allGenre.map((genre) => (
+              <option key={genre.name} value={genre.name}>
+                {genre.name}
+              </option>
+            ))}
+            </select> 
+
+            <select onChange={e => handleFilterCreated(e)} >
+                <option value = 'all'>All Games</option> 
                 <option value = 'created'>Local Games </option>    
                 <option value = 'API'>External Games </option>    
             </select> 
-            <Paginado  
+            </div>
+        
+
+
+            <Paginado  // RENDERIZAR PAGINADO. LE PASO LAS PROPS QUE NECESITA EL COMPONENTE PAGINADO PARA FUNCIONAR
                 videoGamesPerPage = {videoGamesPerPage}
                 allVideoGames= {allVideoGames.length}
                 paginado = {paginado}
             />
             
+
             <ul>
               {currentVideoGames?.map((g) => {
                 return (
@@ -74,6 +128,7 @@ return (
                         name={g.name}
                         image={g.background_image}
                         genres={g.genres}
+                        
                        
                         
                     />

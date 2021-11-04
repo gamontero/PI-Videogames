@@ -8,7 +8,7 @@ export default function Paginado ({videoGamesPerPage, allVideoGames, paginado })
         
     }
 
-    return ( 
+    return (  // la lista que se va a renderizar 
         <div>
             <ul>
                 {pageNumbers && pageNumbers.map(number =>(
