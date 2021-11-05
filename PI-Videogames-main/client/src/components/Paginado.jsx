@@ -4,7 +4,7 @@ export default function Paginado ({videoGamesPerPage, allVideoGames, paginado })
     const pageNumbers = []
 
     for (let i = 0; i <= Math.ceil(allVideoGames/videoGamesPerPage); i++) {
-        pageNumbers.push(i + 1)
+        pageNumbers.push(i)
         
     }
 

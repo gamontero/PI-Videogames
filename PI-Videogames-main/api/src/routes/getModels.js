@@ -21,11 +21,14 @@ const getApiInfo = async () => {
         .then(responses => {
             responses.forEach(responses => apiGames.push( 
                 responses.data.results.map(game => { 
-                    const {name, background_image, genres, id} = game;
+                    const {name, background_image, genres, id, platforms, rating} = game;
                     return {
                         name,
                         background_image,
+                        platforms: platforms.map(g => g.platform.name),
                         genres: genres.map(g => g.name),
+                        rating,
+                        
                         id, 
                     }
                 })

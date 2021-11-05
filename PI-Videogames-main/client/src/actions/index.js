@@ -33,14 +33,6 @@ export function getGenres() {
   };
 }
 
-export function filterVideoGamesByGenre(payload){ 
-  return { 
-    type: 'FILTER_BY_GENRE',
-    payload, 
-  }
-
-
-}
 
 export function postVideoGame(payload) {
   return async function (dispatch) {
@@ -59,9 +51,10 @@ export function filterCreatedDB(payload) {
 
 export function filterByGenre(payload) {
   console.log(payload)
-  return {
+    return {
     type: "FILTER_BY_GENRE",
     payload,
+    
   };
 }
 
@@ -78,4 +71,26 @@ export function orderByRating(payload) {
     payload,
   };
 }
+
+export function getDetail(id) {
+  if (id) {
+    return async function (dispatch) {
+      try {
+        let json = await axios.get("/videogames/" + id);
+
+        return dispatch({
+          type: "GET_DETAIL",
+          payload: json.data,
+        });
+      } catch (error) {
+          alert("Game Not Found") 
+      }
+    };
+  }
+  return {
+    type: "RESET",
+  };
+}
+
+
  

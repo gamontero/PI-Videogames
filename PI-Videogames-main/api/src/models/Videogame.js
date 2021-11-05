@@ -23,8 +23,8 @@ module.exports = (sequelize) => {
       
     },
 
-    releasedate: {
-      type: DataTypes.STRING,
+    releaseDate: {
+      type: DataTypes.DATE,
   
       
     },
