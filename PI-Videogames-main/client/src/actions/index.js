@@ -73,17 +73,19 @@ export function orderByRating(payload) {
 }
 
 export function getDetail(id) {
+  console.log(id)
   if (id) {
     return async function (dispatch) {
       try {
-        let json = await axios.get("/videogames/" + id);
+        let gameDetail = await axios.get("/videogames/" + id);
+        console.log(gameDetail)
 
-        return dispatch({
+        dispatch({
           type: "GET_DETAIL",
-          payload: json.data,
+          payload: gameDetail.data
         });
       } catch (error) {
-          alert("Game Not Found") 
+          alert("Game Not Found Front") 
       }
     };
   }

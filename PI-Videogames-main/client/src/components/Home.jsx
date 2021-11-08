@@ -97,7 +97,7 @@ export default function Home() {
                         <option value='low'> Lowest Score</option>
                     </select>
 
-                    
+
                     <select onChange={e => handleFilterGenre(e)}>
                         <option value='all'>Genres</option>
 
@@ -127,20 +127,17 @@ export default function Home() {
                 <ul>
                     {currentVideoGames?.map((g) => {
                         return (
-                            // <Fragment>
-                            //     <Link to={"/home/" + g.id}>
-                            <GameCard
-
-                                name={g.name}
-                                image={g.background_image}
-                                genres={g.genres}
-                                rating = {g.rating}
-
-
-
-                            />
-                            // </Link>
-                            // </Fragment>
+                            <div>
+                                <Link to={"/videogame/" + g.id}>
+                                    <GameCard
+                                        id={g.id}
+                                        name={g.name}
+                                        image={g.background_image}
+                                        genres={g.genres}
+                                        rating={g.rating}
+                                    />
+                                </Link>
+                            </div>                           
                         );
                     })}
                 </ul>

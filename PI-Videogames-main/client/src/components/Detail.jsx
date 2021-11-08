@@ -5,6 +5,7 @@ import { getDetail } from "../actions/index";
 
 
 export default function Detail(props) {
+  console.log(props)
   const dispatch = useDispatch();
 
   const { id } = props.match.params;
@@ -14,13 +15,13 @@ export default function Detail(props) {
   }, [id, dispatch]);
   var detail = useSelector((state) => state.detail);
 
-   function handleReset() {
+  function handleReset() {
     dispatch(getDetail());
   }
 
   return (
     <div>
-      {detail.length == 0 ? (
+      {detail.length === 0 ? (
         <div>
           <p>...Loading</p>
         </div>
@@ -28,46 +29,46 @@ export default function Detail(props) {
         <>
           <div>
             <Link to="/home" onClick={handleReset}>
-               Return Home
+              Return Home
             </Link>
           </div>
-            
-            
-              <img src={detail.background_image} alt={detail.name}/>
-              <div>
-                <p>
-                  <strong>Title: </strong> {detail.name}
-                </p>
 
-                <p>
-                  <strong>Released date:</strong>{" "}
-                  {detail.released || detail.releaseDate}
-                </p>
 
-                <p>
-                  <strong>Platforms: </strong>
+          <img src={detail.background_image} alt={detail.name} />
+          <div>
+            <p>
+              <strong>Title: </strong> {detail.name}
+            </p>
 
-                  {detail.id?.length > 7
-                    ? detail.platforms?.map((p) => p.name).join(" - ")
-                    : detail.platforms?.map((p) => p.platform.name).join(" - ")}
-                </p>
+            <p>
+              <strong>Released date:</strong>{" "}
+              {detail.released || detail.releaseDate}
+            </p>
 
-                <p>
-                  <strong>Genres: </strong>
-                  {detail.genres?.map((g) => g.name).join("-")}
-                </p>
+            <p>
+              <strong>Platforms: </strong>
 
-                <p>
-                  <strong>Rating: </strong>
-                  {detail.rating}
-                </p>
+              {detail.id?.length > 7
+                ? detail.platforms?.map((p) => p.name).join(" - ")
+                : detail.platforms?.map((p) => p.platform.name).join(" - ")}
+            </p>
 
-                <p>
-                  <strong>Description: </strong>
-                  {detail.description_raw || detail.description}
-                </p>
-              
-            
+            <p>
+              <strong>Genres: </strong>
+              {detail.genres?.map((g) => g.name).join("-")}
+            </p>
+
+            <p>
+              <strong>Rating: </strong>
+              {detail.rating}
+            </p>
+
+            <p>
+              <strong>Description: </strong>
+              {detail.description_raw || detail.description}
+            </p>
+
+
           </div>
         </>
       )}
