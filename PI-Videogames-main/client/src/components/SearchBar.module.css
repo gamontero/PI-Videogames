@@ -1,0 +1,44 @@
+.searchbar {
+    width: 6cm;
+    
+    height: 30px;
+    
+    border: none;
+    background-color:rgb(227, 228, 212);
+    flex-wrap: wrap;
+  }
+  
+  .container {
+    position: relative;
+    justify-content: center;
+  }
+  
+  .bn30 {
+    position: absolute;
+    right: 0;
+    
+    top: 0;
+    height: 32px;
+    
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    background-color: #ffeba7;
+    font-weight: bold;
+    color: black;
+  }
+
+  
+
+  
+
+
+
+
+  /* @media only screen  { 
+    .searchbar {
+      width: 10rem;
+      height: 0.8cm;
+    }
+  } */

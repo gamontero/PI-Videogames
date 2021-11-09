@@ -1,0 +1,45 @@
+.detailContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    background-color: #2a382e;
+    border-style: solid;
+    border-color: black;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    margin-top: 3cm;
+    text-align: center;
+    
+  }
+
+  .descriptionS {
+    margin-left: 1cm;
+    margin-right: 1cm;
+    
+  }
+
+  
+  .gameDetails {
+    font-size: 1.5rem;
+  }
+  .imgDetail {
+    border-radius: 10px;
+    
+    width: 400px;
+    height: 380px;
+    display: flex;
+  }
+  
+  .firstItem {
+    margin-top: 0;
+  }
+  
+ 
+  
+  @media only screen and (max-width: 1000px) {
+    .detailContainer {
+      flex-direction: column;
+      width: auto;
+    }
+  }

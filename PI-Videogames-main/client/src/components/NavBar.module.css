@@ -1,0 +1,38 @@
+.container {
+    
+    text-align: center;
+    background-color: #1f2029;
+    height: 5vh;
+    top: 0;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    display: flex; 
+
+  }
+
+option {
+  font-size: 15px;
+  background-color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.link1 {
+  font-family: sans-serif;
+  color: white;
+  text-decoration: solid;
+  font-weight: bolder;
+}
+
+.Title {
+text-decoration: none;
+color: white;
+font-weight: bold;
+  
+}
+
+  

@@ -25,21 +25,19 @@ module.exports = (sequelize) => {
 
     releaseDate: {
       type: DataTypes.DATE,
-  
+      allowNull: true,
       
     },
+
 
     platforms: {
       type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false, 
     },
-
-    image: {
-      type: DataTypes.TEXT
-    },
-
+          
     rating: {
-      type: DataTypes.REAL, // decimal 
+      type: DataTypes.REAL, // decimal
+      allowNull: true,
       
     },
 

@@ -5,7 +5,7 @@ const { API_KEY } = process.env;
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const { default: axios } = require("axios");
-const { Genre, Videogame} = require("../db");
+const { Genre, Videogame } = require("../db");
 const router = Router();
 const { getAllGames, getGenre } = require("./getModels")
 
@@ -34,34 +34,34 @@ router.get('/videogames', async (req, res) => {
 
 
 router.get('/videogames/:id', async (req, res) => {
-  
-  let  id = req.params.id; //ojo que siempre me deben dar un param 
-  console.log(id)
+
+  let id = req.params.id; //ojo que siempre me deben dar un param 
+
   if (typeof id !== "string") id.toString();
   try {
     if (id.includes("-")) {
       const gameDB = await Videogame.findOne({
-        where: { id:id },
+        where: { id: id },
         include: Genre,
       });
       return res.json(gameDB);
     } else {
-
-    const apiGamesResponse = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
-    const apiGames = await apiGamesResponse.data
-    if (apiGames.name) {
-    const {name, background_image, genres, description, released, rating, platforms} = apiGames
-    const gameDetails = {
-        name,
-        description,
-        released,
-        background_image,
-        rating,
-        genres, 
-        platforms,
+      const apiGamesResponse = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+      const apiGames = await apiGamesResponse.data
+      if (apiGames.name) {
+        const { name, background_image, genres, description, released, rating, platforms } = apiGames
+        const gameDetails = {
+          name,
+          description,
+          released,
+          background_image,
+          rating,
+          genres,
+          platforms,
+        }
+        res.status(200).json(gameDetails);
       }
-     res.status(200).json(gameDetails);
-    }}
+    }
   } catch (err) {
     res.status(404).json("Id not found");
   }
@@ -82,20 +82,10 @@ router.get('/genres', async (req, res) => {
       })
     });
     const TotalGenres = await Genre.findAll();
-
-
-
     res.status(200).json(TotalGenres)
-
-
-  }
-  catch (err) {
-    console.log(err)
+  } catch (err) {
     res.status(500).json(" problema con ruta genre")
-
-
   }
-
 })
 
 router.post('/videogames', async (req, res) => {

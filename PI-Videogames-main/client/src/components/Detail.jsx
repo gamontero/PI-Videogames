@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../actions/index";
+import NavBar from "./NavBar";
+import styles from "./Detail.module.css"
 
 
 export default function Detail(props) {
-  console.log(props)
+  
   const dispatch = useDispatch();
-
   const { id } = props.match.params;
 
   useEffect(() => {
@@ -15,34 +16,36 @@ export default function Detail(props) {
   }, [id, dispatch]);
   var detail = useSelector((state) => state.detail);
 
-  function handleReset() {
-    dispatch(getDetail());
-  }
+const defaultImage = "https://cdnb.artstation.com/p/assets/images/images/036/628/681/4k/ivanov-alvarado-arcade-stylized-video-game-asset-1.jpg?1618196293"
 
+ 
   return (
     <div>
-      {detail.length === 0 ? (
+
+    
+      {detail.length == 0 ? (
         <div>
+        <div><NavBar/></div>
           <p>...Loading</p>
         </div>
+    
       ) : (
-        <>
-          <div>
-            <Link to="/home" onClick={handleReset}>
-              Return Home
-            </Link>
-          </div>
+        <div >
+        <div>
+          <NavBar/>
+        </div>
 
-
-          <img src={detail.background_image} alt={detail.name} />
+        <div className={styles.detailContainer}>
+          <img src={detail.background_image || defaultImage} className={styles.imgDetail} alt={detail.name} alt="img not found"
+                />
           <div>
             <p>
               <strong>Title: </strong> {detail.name}
             </p>
 
             <p>
-              <strong>Released date:</strong>{" "}
-              {detail.released || detail.releaseDate}
+              <strong>Released date: </strong>
+              {detail.released}
             </p>
 
             <p>
@@ -55,7 +58,7 @@ export default function Detail(props) {
 
             <p>
               <strong>Genres: </strong>
-              {detail.genres?.map((g) => g.name).join("-")}
+              {detail.genres?.map((g) => g.name).join(" - ")}
             </p>
 
             <p>
@@ -63,15 +66,16 @@ export default function Detail(props) {
               {detail.rating}
             </p>
 
-            <p>
+            <p className={styles.descriptionS}>
               <strong>Description: </strong>
-              {detail.description_raw || detail.description}
+              {detail.description_raw || detail.description.replace(/<[^>]*>?/g,"")}
             </p>
 
-
-          </div>
-        </>
+        </div>
+        </div>
+        </div>
       )}
     </div>
+    
   );
 }

@@ -5,7 +5,8 @@ import { getVideoGames, getGenres, filterCreatedDB, filterByGenre, orderByName, 
 import { Link } from 'react-router-dom'
 import GameCard from './GameCard'
 import Paginado from './Paginado';
-import SearchBar from './SearchBar';
+import NavBar from './NavBar';
+import styles from "./Home.module.css"
 
 export default function Home() {
     //ESTADOS. MAP STATE TO PROPS ETC----------------
@@ -75,30 +76,32 @@ export default function Home() {
 
     // -----------------------------------------
     return (
-        <div>
-            <Link to='/creategame'> Create Videogame</Link>
-            <h1> The Video Game App</h1>
-            <button onClick={e => { handleClick(e) }}>
-                Reload
+        <div className={styles.mainscreen}>
+            <div>
+                <NavBar/>
+            </div>
+            
+            
+            <button className={styles.btn31} onClick={e => { handleClick(e) }}> 
+            <span>Reload</span>
+                
             </button>
             <div>
-                <SearchBar />
-
-
-                {/* filtros y ordenamientos */}
+                 {/* filtros y ordenamientos */}
                 <div>
-                    <select onChange={e => handleSort(e)}>
+                    <span className={styles.span1}>
+                    <select className={styles.formStyle} onChange={e => handleSort(e)}>
                         <option value='asc'>A-Z</option>
                         <option value='desc'>Z-A </option>
                     </select>
 
-                    <select onChange={e => handleScore(e)}>
+                    <select className={styles.formStyle} onChange={e => handleScore(e)}>
                         <option value='top'>Highest Score</option>
                         <option value='low'> Lowest Score</option>
                     </select>
 
 
-                    <select onChange={e => handleFilterGenre(e)}>
+                    <select className={styles.formStyle} onChange={e => handleFilterGenre(e)}>
                         <option value='all'>Genres</option>
 
                         {allGenre.map((genre) => (
@@ -108,12 +111,14 @@ export default function Home() {
                         ))}
                     </select>
 
-                    <select onChange={e => handleFilterCreated(e)} >
+                    <select className={styles.formStyle} onChange={e => handleFilterCreated(e)} >
                         <option value='all'>All Games</option>
                         <option value='created'>Local Games </option>
                         <option value='API'>External Games </option>
                     </select>
+                    </span>
                 </div>
+                
 
 
 
@@ -124,7 +129,7 @@ export default function Home() {
                 />
 
 
-                <ul>
+                <ul className={styles.gameGrid}>
                     {currentVideoGames?.map((g) => {
                         return (
                             <div>

@@ -36,7 +36,7 @@ export function getGenres() {
 
 export function postVideoGame(payload) {
   return async function (dispatch) {
-    const response = await axios.post("/videogame", payload);
+    const response = await axios.post("/videogames", payload);
     return response;
   };
 }
@@ -73,14 +73,12 @@ export function orderByRating(payload) {
 }
 
 export function getDetail(id) {
-  console.log(id)
+  
   if (id) {
     return async function (dispatch) {
       try {
         let gameDetail = await axios.get("/videogames/" + id);
-        console.log(gameDetail)
-
-        dispatch({
+          dispatch({
           type: "GET_DETAIL",
           payload: gameDetail.data
         });
