@@ -22,3 +22,37 @@ describe('Videogame routes', () => {
     );
   });
 });
+
+
+describe('GET /platform', function()  {  
+  it('should return all platform', function () {
+    agent.get('/platform')
+    .expect(200)
+    .expect('Content-Type', /json/) 
+    .expect(function(res) {
+    expect(res.body).to.have.length(50); 
+    })
+  });
+});
+
+describe('GET /genres', function()  { 
+  it('should return all genres', function () {
+    agent.get('/genres')
+    .expect(200)
+    .expect('Content-Type', /json/) 
+    .expect(function(res) {
+    expect(res.body).to.have.length(19); 
+    })
+  });
+});
+
+describe('GET /videogames', function()  {  
+  it('should return all videogames', function () {
+    agent.get('/videogames')
+    .expect(200)
+    .expect('Content-Type', /json/) 
+    .expect(function(res) {
+    expect(res.body).to.have.length(100); 
+    })
+  });
+});
