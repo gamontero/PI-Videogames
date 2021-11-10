@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../actions/index";
 import NavBar from "./NavBar";
@@ -15,15 +14,14 @@ export default function Detail(props) {
     dispatch(getDetail(id));
   }, [id, dispatch]);
   var detail = useSelector((state) => state.detail);
+  console.log(detail)
 
 const defaultImage = "https://cdnb.artstation.com/p/assets/images/images/036/628/681/4k/ivanov-alvarado-arcade-stylized-video-game-asset-1.jpg?1618196293"
 
  
   return (
     <div>
-
-    
-      {detail.length == 0 ? (
+      {detail.length === 0 ? (
         <div>
         <div><NavBar/></div>
           <p>...Loading</p>
@@ -36,7 +34,7 @@ const defaultImage = "https://cdnb.artstation.com/p/assets/images/images/036/628
         </div>
 
         <div className={styles.detailContainer}>
-          <img src={detail.background_image || defaultImage} className={styles.imgDetail} alt={detail.name} alt="img not found"
+          <img src={detail.background_image || defaultImage} className={styles.imgDetail}  alt="img not found"
                 />
           <div>
             <p>
@@ -45,14 +43,14 @@ const defaultImage = "https://cdnb.artstation.com/p/assets/images/images/036/628
 
             <p>
               <strong>Released date: </strong>
-              {detail.released}
+              {detail.releaseDate}
             </p>
 
             <p>
               <strong>Platforms: </strong>
 
               {detail.id?.length > 7
-                ? detail.platforms?.map((p) => p.name).join(" - ")
+                ? detail.platforms?.map((p) => p).join(" - ")
                 : detail.platforms?.map((p) => p.platform.name).join(" - ")}
             </p>
 

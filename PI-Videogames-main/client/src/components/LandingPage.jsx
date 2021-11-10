@@ -11,7 +11,7 @@ export default function Landing() {
             <h1>Arcade</h1>
             <p>Welcome to Arcade!
             A video game library developed as an individual project. 
-            Please take the time to explore website, search for your favorites games 
+            Please take the time to explore the website, search for your favorite games 
             or even create your own.
             Have fun! and thank you for the support. </p>
         </div>    

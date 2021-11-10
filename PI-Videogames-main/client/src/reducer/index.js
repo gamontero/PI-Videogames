@@ -23,7 +23,8 @@ function rootReducer(state = initialState, action) {
     case "GET_GENRES":
       return {
         ...state,
-        genres: action.payload,
+        genres: action.payload.map((g) => g.name),
+          
       };
 
     case "GET_NAME_VIDEOGAME":
@@ -51,12 +52,11 @@ function rootReducer(state = initialState, action) {
       };
 
     case "FILTER_CREATED":
-      const allVideoGames = state.videoGames
-      const createdFilter = action.payload === "created" ? allVideoGames.filter((g) => g.createdID) : allVideoGames.filter((g) => !g.createdID);
+       const createdFilter = action.payload === "created" ? state.allVideoGames.filter((g) => g.createdID) : state.allVideoGames.filter((g) => !g.createdID);
       return {
         ...state,
-        videoGames: action.payload === 'all' ? state.allVideoGames : createdFilter
-      }
+        videoGames: action.payload === 'all' ? state.allVideoGames : createdFilter,
+      };
 
     case "ORDER_BY_NAME":
       let sort =

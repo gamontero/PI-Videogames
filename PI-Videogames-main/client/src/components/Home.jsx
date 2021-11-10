@@ -14,6 +14,7 @@ export default function Home() {
     const allVideoGames = useSelector((state) => state.videoGames); // me trae del reducer el estado
     const videogameState = useSelector((state) => state.allVideoGames);
     const allGenre = useSelector((state) => state.genres);
+    console.log(allGenre)
     const [_orden, setOrden] = useState("");
     //----------------------------------
 
@@ -45,7 +46,7 @@ export default function Home() {
     }
 
     function handleFilterCreated(e) {
-        e.preventDefault();
+        
         dispatch(filterCreatedDB(e.target.value))
         setCurrentPage(1)
         setOrden(e.target.value);

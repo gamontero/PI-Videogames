@@ -35,16 +35,18 @@ router.get('/videogames', async (req, res) => {
 
 router.get('/videogames/:id', async (req, res) => {
 
-  let id = req.params.id; //ojo que siempre me deben dar un param 
+  const id = req.params.id; //ojo que siempre me deben dar un param 
 
   if (typeof id !== "string") id.toString();
   try {
     if (id.includes("-")) {
       const gameDB = await Videogame.findOne({
         where: { id: id },
-        include: Genre,
+        include: [Genre],
       });
+      console.log(gameDB)
       return res.json(gameDB);
+      
     } else {
       const apiGamesResponse = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
       const apiGames = await apiGamesResponse.data
@@ -74,16 +76,23 @@ router.get('/genres', async (req, res) => {
   try {
     const genreApi = await axios.get(` https://api.rawg.io/api/genres?key=${API_KEY}`);
     const genre = genreApi.data.results;
-    genre.forEach(async (g) => {
+    const genre2 = genre.map((g) => g.name);
+    console.log(genre2)
+    genre2.forEach(async (g) => {
       await Genre.findOrCreate({
         where: {
-          name: g.name
+          name: g
         }
       })
     });
-    const TotalGenres = await Genre.findAll();
+    const TotalGenres = await Genre.findAll({
+      attributes: ["name"]
+    });
+    
+    console.log(TotalGenres)
     res.status(200).json(TotalGenres)
   } catch (err) {
+    console.log(err)
     res.status(500).json(" problema con ruta genre")
   }
 })
@@ -96,11 +105,17 @@ router.post('/videogames', async (req, res) => {
     description,
     releaseDate,
     rating,
-    genres,
     created,
     platforms,
 
   });
+
+    let dbGenre = await Genre.findAll({
+      where: {name: genres},
+    });
+
+    gameCreated.addGenres(dbGenre);
+
   res.status(200).send("Your game has been saved")
 })
 

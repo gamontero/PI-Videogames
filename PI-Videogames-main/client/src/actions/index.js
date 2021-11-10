@@ -35,6 +35,7 @@ export function getGenres() {
 
 
 export function postVideoGame(payload) {
+  console.log(payload)
   return async function (dispatch) {
     const response = await axios.post("/videogames", payload);
     return response;
