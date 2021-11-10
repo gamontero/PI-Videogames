@@ -10,11 +10,9 @@ const router = Router();
 const { getAllGames, getGenre } = require("./getModels")
 
 
+//-------------------------------------------------------------------------------------
 
 
-
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 router.get('/videogames', async (req, res) => {
   const { name } = req.query; //no deberia traer por
   let allGames = await getAllGames();
@@ -30,7 +28,7 @@ router.get('/videogames', async (req, res) => {
 
 });
 
-
+//-------------------------------------------------------------------------------------
 
 
 router.get('/videogames/:id', async (req, res) => {
@@ -44,7 +42,7 @@ router.get('/videogames/:id', async (req, res) => {
         where: { id: id },
         include: [Genre],
       });
-      console.log(gameDB)
+      
       return res.json(gameDB);
       
     } else {
@@ -70,7 +68,7 @@ router.get('/videogames/:id', async (req, res) => {
 });
 
 
-
+//--------------------------------------------------------------------------------------------------------------------
 
 router.get('/genres', async (req, res) => {
   try {
@@ -96,6 +94,8 @@ router.get('/genres', async (req, res) => {
     res.status(500).json(" problema con ruta genre")
   }
 })
+
+//-------------------------------------------------------------------------------------------------------------------
 
 router.post('/videogames', async (req, res) => {
   const { name, description, releaseDate, rating, genres, platforms, created } = req.body;
