@@ -1,15 +1,13 @@
 import React from "react";
 import styles from "./Paginado.module.css"
 
-export default function Paginado ({videoGamesPerPage, allVideoGames, paginado }) { //me lo traigo como prop
+export default function Paginado ({videoGamesPerPage, allVideoGames, paginado }) { 
     const pageNumbers = []
-
     for (let i = 1; i <= Math.ceil(allVideoGames/videoGamesPerPage); i++) {
-        pageNumbers.push(i)
-        
-    }
+        pageNumbers.push(i)      
+    };
 
-    return (  // la lista que se va a renderizar 
+    return ( 
         <div className={styles.pos}>
             <ul>
                 {pageNumbers && pageNumbers.map(number =>(
@@ -18,7 +16,6 @@ export default function Paginado ({videoGamesPerPage, allVideoGames, paginado })
                     </span>
                 ))}
             </ul>
-
         </div>
-    )
-}
+    );
+};

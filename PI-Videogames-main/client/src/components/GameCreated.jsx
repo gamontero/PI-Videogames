@@ -29,11 +29,7 @@ export default function GameCreated() {
     const dispatch = useDispatch();
     const genres2 = useSelector((state) => state.genres);
     console.log(genres2)
-    const platforms1 = useSelector((state) => state.platforms);
-    
-    const platforms2 = platforms1.flat()
-    console.log(platforms2)
-    const platforms3 = [...new Set(platforms2)]
+    const platforms = useSelector((state) => state.platforms);
     const [error, setError] = useState({
     });
     const [input, setInput] = useState({
@@ -45,9 +41,7 @@ export default function GameCreated() {
         
         genres: [],
     });
-    console.log(input.platforms)
-    console.log(input.genres)
-
+    
     function handleChange(e) {
         setInput({
             ...input,
@@ -114,21 +108,21 @@ export default function GameCreated() {
                     <h1 className={styles.Title}>New Arcade</h1>
                     <form className={styles.CreationForm} onSubmit={(e) => handleSubmit(e)}>
                         <div>
-                            <input className={styles.formStyle} placeholder="Name:" type="text" required value={input.name} name="name" onChange={(e) => handleChange(e)} />
+                            <label className={styles.label}>Name: </label>
+                            <input className={styles.formStyle} type="text" required value={input.name} name="name" onChange={(e) => handleChange(e)} />
                             {error.name && <p className={styles.errors}>{error.name}</p>}
                         </div>
                         <div>
-                            <input className={styles.formStyle} type="text" required value={input.description} placeholder="Description:" name="description" onChange={(e) => handleChange(e)} />
+                            <label className={styles.label}>Description: </label>
+                            <input className={styles.formStyle} type="text" required value={input.description} name="description" onChange={(e) => handleChange(e)} />
                             {error.description && (<p className={styles.errors}>{error.description}</p>)}
                         </div>
 
-
-                
+                        <div>
+                        <label className={styles.label}>Platforms: </label>
                         <div className={styles.formStyle}>
-                         
-
-                            {platforms3.map((g) =>
-                            (<label>
+                            {platforms.map((g) =>
+                            (<label key={g}>
                                 <input
 
                                     onChange={handlePlatform}
@@ -140,29 +134,32 @@ export default function GameCreated() {
 
                             {error.platforms && (<p className={styles.errors}>{error.platforms}</p>)}
                         </div>
-
+                        </div>
+                        <div>
+                        <label className={styles.label}>Genres: </label>
                         <div className={styles.formStyle}>
                             {genres2.map((g) =>
-                            (<label>
+                            (<label key={g}>
                                 <input
                                     onChange={handleGenre}
                                     type="checkbox"
                                     name={g}
                                     value={g} />
-
                                 {g}
                             </label>))}
 
                             {error.genres && (<p className={styles.errors}>{error.genres}</p>)}
                         </div>
-
-
-                        <div>
-                            <input className={styles.formStyle} placeholder="Released Date:" type="date" required value={input.releaseDate} name="releaseDate" onChange={(e) => handleChange(e)} />
                         </div>
 
                         <div>
-                            <input className={styles.formStyle} placeholder="Rating:" type="number" required value={input.rating} min="0" max="5" name="rating" onChange={(e) => handleChange(e)} />
+                            <label className={styles.label}>Released Date: </label>
+                            <input className={styles.formStyle} type="date" required value={input.releaseDate} name="releaseDate" onChange={(e) => handleChange(e)} />
+                        </div>
+
+                        <div>
+                            <label className={styles.label}>Rating: </label>
+                            <input className={styles.formStyle} type="number" required value={input.rating} min="0" max="5" name="rating" onChange={(e) => handleChange(e)} />
                         </div>
 
                         <div className={styles.divHome}>

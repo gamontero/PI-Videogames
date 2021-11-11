@@ -2,49 +2,49 @@
 const { Router } = require("express");
 require("dotenv").config();
 const { API_KEY } = process.env;
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
 const { default: axios } = require("axios");
 const { Genre, Videogame } = require("../db");
 const router = Router();
-const { getAllGames, getGenre } = require("./getModels")
+const { getAllGames } = require("./getModels")
 
 
 //-------------------------------------------------------------------------------------
 
 
 router.get('/videogames', async (req, res) => {
-  const { name } = req.query; //no deberia traer por
+  const { name } = req.query; 
+  try {
   let allGames = await getAllGames();
   if (name) {
-    let searchedGame = allGames.filter((game) => // tengo que poner await aca? 
+    let searchedGame = allGames.filter((game) => 
       game.name.toLowerCase().includes(name.toLowerCase()));
-    if (searchedGame.length >= 1) return res.status(200).send(searchedGame) // hay otra forma de escribirlo
+    if (searchedGame.length >= 1) return res.status(200).send(searchedGame) 
     res.status(404).send("Game does not exist")
   } else {
     let allGames2 = await getAllGames()
     res.status(200).json(allGames2)
   }
-
+  } catch (error) {
+    res.status(500).json("Get Videogames Route Problems"); 
+  }
 });
 
 //-------------------------------------------------------------------------------------
 
 
 router.get('/videogames/:id', async (req, res) => {
-
-  const id = req.params.id; //ojo que siempre me deben dar un param 
-
+  const id = req.params.id; 
   if (typeof id !== "string") id.toString();
+
   try {
     if (id.includes("-")) {
       const gameDB = await Videogame.findOne({
         where: { id: id },
         include: [Genre],
       });
-      
+
       return res.json(gameDB);
-      
+
     } else {
       const apiGamesResponse = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
       const apiGames = await apiGamesResponse.data
@@ -70,27 +70,27 @@ router.get('/videogames/:id', async (req, res) => {
 
 //--------------------------------------------------------------------------------------------------------------------
 
-router.get('/genres', async (req, res) => {
+router.get('/genres', (req, res) => {
   try {
-    const genreApi = await axios.get(` https://api.rawg.io/api/genres?key=${API_KEY}`);
-    const genre = genreApi.data.results;
-    const genre2 = genre.map((g) => g.name);
-    console.log(genre2)
-    genre2.forEach(async (g) => {
-      await Genre.findOrCreate({
-        where: {
-          name: g
-        }
+    axios.get(` https://api.rawg.io/api/genres?key=${API_KEY}`)
+      .then((response) => {
+
+        const genre = response.data.results;
+        const genre2 = genre.map((g) => g.name);
+        genre2.forEach(async (g) => {
+          await Genre.findOrCreate({
+            where: {
+              name: g
+            }
+          })
+          return Genre.findAll({
+            attributes: ["name"]
+          });
+        })
+        return res.status(200).json(genre2)
+
       })
-    });
-    const TotalGenres = await Genre.findAll({
-      attributes: ["name"]
-    });
-    
-    console.log(TotalGenres)
-    res.status(200).json(TotalGenres)
   } catch (err) {
-    console.log(err)
     res.status(500).json(" problema con ruta genre")
   }
 })
@@ -99,7 +99,7 @@ router.get('/genres', async (req, res) => {
 
 router.post('/videogames', async (req, res) => {
   const { name, description, releaseDate, rating, genres, platforms, created } = req.body;
-
+try {
   let gameCreated = await Videogame.create({
     name,
     description,
@@ -109,14 +109,17 @@ router.post('/videogames', async (req, res) => {
     platforms,
 
   });
+console.log(gameCreated)
+  let dbGenre = await Genre.findAll({
+    where: { name: genres },
+  });
 
-    let dbGenre = await Genre.findAll({
-      where: {name: genres},
-    });
-
-    gameCreated.addGenres(dbGenre);
+  gameCreated.addGenres(dbGenre);
 
   res.status(200).send("Your game has been saved")
+} catch {
+  res.status(500).send("Problems Route Post")
+}
 })
 
 

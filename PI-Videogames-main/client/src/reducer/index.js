@@ -11,11 +11,14 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_VIDEOGAMES":
+      const platforms1 = action.payload.map((el) => el.platforms)
+      const platforms2 = platforms1.flat()
+      const platforms3 = [...new Set(platforms2)]
       return {
         ...state,
         videoGames: action.payload, //envio todo lo que esta en la accion 
         allVideoGames: action.payload, // OJO esto es para siempre tener una copia del estado y no se me borre cuando los filte
-        platforms: action.payload.map((el) => el.platforms)
+        platforms: platforms3
         
       };
 
@@ -23,7 +26,7 @@ function rootReducer(state = initialState, action) {
     case "GET_GENRES":
       return {
         ...state,
-        genres: action.payload.map((g) => g.name),
+        genres: action.payload.map((g) => g),
           
       };
 
@@ -51,8 +54,19 @@ function rootReducer(state = initialState, action) {
         videoGames: videoGamesFiltered,
       };
 
+      case "FILTER_BY_PLATFORM": // logica siempre antes del return 
+      const videoGamesFiltered1 =
+       action.payload === "all"
+         ? state.allVideoGames
+         : state.videoGames.filter((g) => g.platforms.includes(action.payload))
+     return {
+       ...state,
+       videoGames: videoGamesFiltered1,
+     };
+
     case "FILTER_CREATED":
-       const createdFilter = action.payload === "created" ? state.allVideoGames.filter((g) => g.createdID) : state.allVideoGames.filter((g) => !g.createdID);
+      
+       const createdFilter = action.payload === "API" ? state.allVideoGames.filter((g) => !g.createdID) : state.allVideoGames.filter((g) => g.createdID);
       return {
         ...state,
         videoGames: action.payload === 'all' ? state.allVideoGames : createdFilter,
@@ -61,7 +75,7 @@ function rootReducer(state = initialState, action) {
     case "ORDER_BY_NAME":
       let sort =
         action.payload === "asc"
-          ? state.allVideoGames.sort(function (a, b) {
+          ? state.videoGames.sort(function (a, b) {
             if (a.name > b.name) {
               return 1;
             }
@@ -70,7 +84,7 @@ function rootReducer(state = initialState, action) {
             }
             return 0;
           })
-          : state.allVideoGames.sort(function (a, b) {
+          : state.videoGames.sort(function (a, b) {
             if (a.name > b.name) {
               return -1;
             }

@@ -22,6 +22,9 @@
     background-color: transparent;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    
     
   }
   .btn31 span {
@@ -52,11 +55,13 @@
     width: 100%;
   }
 
-.span1 {
-  align-items: center;
-  margin-left: 39%;
-  
-}
+  .container2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1%;
+  }
+
 .formStyle {
 
   font-size: 16px;
@@ -89,6 +94,18 @@
   text-align: center;
 }
 
+.paginado {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+}
+
+.span1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   
   
       
