@@ -9,14 +9,17 @@ import NavBar from "./NavBar";
 function validate(input) {
     let errorValidate = {};
     if (!input.name.trim()) {
-        errorValidate.name = "Name require";
+        errorValidate.name = "Name required";
     }
     if (!input.description.trim()) {
-        errorValidate.description = "Description require";
+        errorValidate.description = "Description required";
     }
     if (!input.platforms.length) {
-        errorValidate.platforms = "Platforms require";
-    }
+        errorValidate.platforms = "Platform(s) required";
+     }
+     if (!input.genres.length) {
+        errorValidate.genres = "Genre(s) selection required";
+     }
 
     return errorValidate;
 }
@@ -27,8 +30,7 @@ function validate(input) {
 
 export default function GameCreated() {
     const dispatch = useDispatch();
-    const genres2 = useSelector((state) => state.genres);
-    console.log(genres2)
+    const genres = useSelector((state) => state.genres);
     const platforms = useSelector((state) => state.platforms);
     const [error, setError] = useState({
     });
@@ -38,7 +40,6 @@ export default function GameCreated() {
         releaseDate: "",
         rating: "",
         platforms: [],
-        
         genres: [],
     });
     
@@ -47,6 +48,14 @@ export default function GameCreated() {
             ...input,
             [e.target.name]: e.target.value,
         });
+
+        setError(
+            validate({
+                ...input,
+                [e.target.name]: e.target.value 
+
+            })
+        )
 
     }
 
@@ -80,7 +89,9 @@ export default function GameCreated() {
                 [e.target.name]: e.target.value,
             })
         );
+        console.log(error)
         if (Object.keys(error).length === 0) {
+            console.log(error)
             dispatch(postVideoGame(input));
             e.target.reset()
             alert("VideoGame created!");
@@ -92,8 +103,7 @@ export default function GameCreated() {
                 platforms: [],
                 genres: [],
             });
-        } else {
-            alert("ERROR! video game no creado");
+        } else {  alert("Incomplete information");
             return;
         }
     }
@@ -109,12 +119,12 @@ export default function GameCreated() {
                     <form className={styles.CreationForm} onSubmit={(e) => handleSubmit(e)}>
                         <div>
                             <label className={styles.label}>Name: </label>
-                            <input className={styles.formStyle} type="text" required value={input.name} name="name" onChange={(e) => handleChange(e)} />
+                            <input className={styles.formStyle} type="text" value={input.name} name="name" onChange={(e) => handleChange(e)} />
                             {error.name && <p className={styles.errors}>{error.name}</p>}
                         </div>
                         <div>
                             <label className={styles.label}>Description: </label>
-                            <input className={styles.formStyle} type="text" required value={input.description} name="description" onChange={(e) => handleChange(e)} />
+                            <input className={styles.formStyle} type="text" value={input.description} name="description" onChange={(e) => handleChange(e)} />
                             {error.description && (<p className={styles.errors}>{error.description}</p>)}
                         </div>
 
@@ -138,9 +148,10 @@ export default function GameCreated() {
                         <div>
                         <label className={styles.label}>Genres: </label>
                         <div className={styles.formStyle}>
-                            {genres2.map((g) =>
+                            {genres.map((g) =>
                             (<label key={g}>
                                 <input
+                                    
                                     onChange={handleGenre}
                                     type="checkbox"
                                     name={g}

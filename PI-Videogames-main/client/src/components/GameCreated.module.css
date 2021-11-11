@@ -55,6 +55,8 @@
 .errors {
   color: red;
   font-size: 15px;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .btn {
