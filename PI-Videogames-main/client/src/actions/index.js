@@ -95,10 +95,13 @@ export function getVideoGames() {
   }
 
   export function getDetail(id) {
+    console.log(id)
+
     if (id) {
       return async function (dispatch) {
         try {
-          let gameDetail = await axios.get("/videogames/" + id);
+          let gameDetail = await axios.get(`/videogames/id?id=${id}`);
+          
           dispatch({
             type: "GET_DETAIL",
             payload: gameDetail.data

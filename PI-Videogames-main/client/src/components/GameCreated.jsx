@@ -25,9 +25,6 @@ function validate(input) {
 }
 
 
-
-
-
 export default function GameCreated() {
     const dispatch = useDispatch();
     const genres = useSelector((state) => state.genres);

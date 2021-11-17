@@ -11,11 +11,12 @@ import SearchBar from './SearchBar';
 export default function Home() {
     
     const dispatch = useDispatch();
-    const allVideoGames = useSelector((state) => state.videoGames); // me trae del reducer el estado
+    const allVideoGames = useSelector((state) => state.videoGames); 
     const allGenre = useSelector((state) => state.genres);
     const platforms = useSelector((state) => state.platforms);
     
     const [_orden, setOrden] = useState("");
+    
     //----------------------------------
 
 
@@ -33,9 +34,9 @@ export default function Home() {
     //------------------------------
 
     useEffect(() => {
-        dispatch(getVideoGames()) // lo mismo que el map dispatch to props REPASAR
+        dispatch(getVideoGames()) 
         dispatch(getGenres())
-    }, [dispatch]) //se coloca el arreglo para que no sea una loop inifnito
+    }, [dispatch]) 
 
 
 
@@ -98,19 +99,19 @@ export default function Home() {
                 <div className={styles.span1}>
                     <span>
                     <select className={styles.formStyle} defaultValue={"DEFAULT"} onChange={e => handleSort(e)}>
-                        <option selected="false" disabled="disabled" value="DEFAULT" name="DEFAULT">Order ⇵</option>
+                        <option  value="DEFAULT" name="DEFAULT">Order ⇵</option>
                         <option value='asc'>A-Z</option>
                         <option value='desc'>Z-A </option>
                     </select>
 
                     <select className={styles.formStyle}  defaultValue={"DEFAULT"} onChange={e => handleScore(e)}>
-                        <option selected="false" disabled="disabled" value="DEFAULT">Rating ⇵ </option>
+                        <option value="DEFAULT">Rating ⇵ </option>
                         <option value='top'>Highest Score</option>
                         <option value='low'> Lowest Score</option>
                     </select>
 
                     <select className={styles.formStyle} name="filterGenres" defaultValue={"DEFAULT"} onChange={e => handleFilterGenre(e)}>
-                        <option value="DEFAULT" disabled="disabled" selected="false">Filter by Genre</option>
+                        <option value="DEFAULT" >Filter by Genre</option>
                         <option value='all'>All Genres</option>
                         {allGenre.map((genre) => (
                             <option key={genre} value={genre}>
@@ -120,7 +121,7 @@ export default function Home() {
                     </select>
 
                     <select className={styles.formStyle} name="filterPlatforms" defaultValue={"DEFAULT"} onChange={e => handleFilterPlatforms(e)}>
-                        <option value="DEFAULT" disabled="disabled" selected="false">Filter by Platform</option>
+                        <option value="DEFAULT" >Filter by Platform</option>
                         <option value='all'>All Platforms</option>
                         {platforms.map((g) => (
                             <option key={g} value={g}>
@@ -130,7 +131,7 @@ export default function Home() {
                     </select>
 
                     <select className={styles.formStyle} defaultValue={"DEFAULT"} onChange={e => handleFilterCreated(e)} >
-                        <option selected="false" disabled="disabled" value="DEFAULT">Games</option>
+                        <option value="DEFAULT">Games</option>
                         <option value='all'>All Games</option>
                         <option value='created'>Created </option>
                         <option value='API'>API</option>

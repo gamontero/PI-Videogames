@@ -32,8 +32,9 @@ router.get('/videogames', async (req, res) => {
 //-------------------------------------------------------------------------------------
 
 
-router.get('/videogames/:id', async (req, res) => {
-  const id = req.params.id; 
+router.get('/videogames/id', async (req, res) => {
+  const {id} = req.query;
+  
   if (typeof id !== "string") id.toString();
 
   try {
